@@ -1,0 +1,9 @@
+Code:
+struct node {
+    char data;
+    struct node *link;
+};
+
+T(n): O(1) for all cases
+
+S(n): O(n) depends on number of nodes

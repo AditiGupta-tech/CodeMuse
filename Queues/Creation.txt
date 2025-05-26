@@ -1,0 +1,7 @@
+Code:
+int n, queue [n]; 
+int F=-1, R=-1;
+
+T(n): O(1) for all cases
+
+S(n): O(n) depends on number of elements

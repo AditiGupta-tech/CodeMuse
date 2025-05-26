@@ -1,0 +1,19 @@
+Code:
+void search(int value) {
+    if (isEmpty()) {
+printf("Priority Queue is Empty\n");
+        return;
+    }
+    for (int i = front; i <= rear; i++) {
+        if (pq[i] == value) {
+   printf("Element %d found at position %d\n", value, i - front + 1);
+            return;
+        }
+    }
+    printf("Element %d not found in the Priority Queue\n", value); 
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

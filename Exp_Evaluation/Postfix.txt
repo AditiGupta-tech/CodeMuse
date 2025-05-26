@@ -1,0 +1,39 @@
+Code:
+int postFix(char expr[]) {
+    int i = 0, V1, V2, V3 ;
+    while (expr[i] != '\0') {
+        if (expr[i] == ' ') {
+            i++;
+            continue;
+        }
+        if (isdigit(expr[i])) {
+            int num = 0;
+            while (isdigit(expr[i])) {
+         num = num * 10 + (expr[i] - '0');
+                i++;
+            }
+            push(num);
+        } else {
+            V1 = pop();
+            V2 = pop();
+            
+            switch (expr[i]) {
+                case '+': V3 = V2 + V1;
+                          break;
+                case '-': V3 = V2 - V1;
+                          break;
+                case '*': V3 = V2 * V1;
+                          break;
+                case '/': V3 = V2 / V1;
+                          break;
+            }
+            push(V3);
+            i++;
+        }
+    }
+     return pop();
+}
+
+T(n): O(n) for all cases
+
+S(n): O(n) depends on number of operators and operands

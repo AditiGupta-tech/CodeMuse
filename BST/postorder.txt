@@ -1,0 +1,11 @@
+Code:
+void postorderTraversal(struct tree* root) {
+    if (root == NULL) return;
+    postorderTraversal(root->left);
+    postorderTraversal(root->right);
+     printf("%d ", root->data);
+}
+ 
+T(n): O(n) for all cases
+
+S(n): O(h) where h=height (because of recursive calls)

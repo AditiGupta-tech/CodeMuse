@@ -1,0 +1,14 @@
+Code:
+struct Node* search(struct Node* root, int key) {
+if (root == NULL || root->data == key)
+        return root;
+    if (key < root->data) 
+   return search(root->left, key);
+ else return search(root->right, key);
+}
+
+T(n): O(1) in best case
+T(n): O(log2n) in average case 
+T(n): O(n) in worst case
+
+S(n): O(1) 

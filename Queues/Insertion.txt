@@ -1,0 +1,16 @@
+Code:
+int enqueue(int value, int queue[], int R, int n) 
+{
+    if (!isFull(n, R))
+      {
+      R++;  
+      queue[R] = value;  
+printf("Enqueued %d\n", value);  
+    }
+return R;  
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

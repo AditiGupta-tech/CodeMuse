@@ -1,0 +1,16 @@
+Code:
+void dequeue() {
+  if (front == rear) {
+       front = rear = -1;
+} else if (front == SIZE - 1) {
+   front = 0;
+     } else {
+        front++;
+     }
+printf("Deleted %d\n", cq[front]);
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

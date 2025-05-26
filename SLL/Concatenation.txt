@@ -1,0 +1,16 @@
+Code:
+struct node* concatLL (struct node* P1, struct node* P2) {
+struct node* temp1=P1;
+struct node* temp2=temp1->link;
+
+while(temp2) {
+    temp1=temp1->link;
+    temp2=temp1->link;
+}
+temp1->link=P2;
+return P1;
+}
+
+T(n) : O(n) for all cases
+
+S(n): O(1)

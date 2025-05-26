@@ -1,0 +1,22 @@
+Code:
+void deleteNode(int key) {
+    if (!tail) return;
+struct Node *current = tail->next, *prev=tail;
+
+    do {
+        if (current->data == key) {
+        prev->next = current->next;
+   if (current == tail) {
+tail = (current == tail->next)?NULL:prev;
+ }         
+       free(current);
+       return;
+  }
+        prev = current;
+        current = current->next;
+    } while (current != tail->next);
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 

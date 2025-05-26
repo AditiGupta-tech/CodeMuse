@@ -1,0 +1,19 @@
+Code:
+void deleteFront() {
+    if (isEmpty()) {
+        printf("Deque is Empty\n");
+        return;
+    }
+    printf("Deleted %d from front\n", deque[front]);
+    if (front == rear) {
+        front = rear = -1;
+    } else if (front == SIZE - 1) {
+        front = 0;
+    } else {
+        front++;
+    }
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 

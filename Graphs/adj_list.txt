@@ -1,0 +1,33 @@
+Code:
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void addEdge(struct Node* adjList[], int u, int v) {
+    struct Node* newNode = malloc(sizeof(struct Node));
+    newNode->data = v;
+    newNode->next = adjList[u];
+    adjList[u] = newNode;
+
+    newNode = malloc(sizeof(struct Node));
+    newNode->data = u;
+    newNode->next = adjList[v];
+    adjList[v] = newNode;
+}
+
+void printAdjList(struct Node* adjList[], int n) {
+    for (int i = 0; i < n; i++) {
+        struct Node* temp = adjList[i];
+        printf("Node %d: ", i);
+        while (temp != NULL) {
+            printf("-> %d ", temp->data);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+}
+
+T(n): O(e) e=edges
+
+S(n): O(n+e)

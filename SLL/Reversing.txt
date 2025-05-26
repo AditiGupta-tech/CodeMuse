@@ -1,0 +1,18 @@
+Code:
+struct node* reverseLL(struct node *head) {
+    struct node *p, *c, *n;
+    p = NULL;
+    c = head;
+
+    while (c != NULL) {
+        n = c->link;
+        c->link = p;
+        p = c;
+        c = n;
+    }
+    return p; 
+}
+
+T(n) : O(n) for all cases
+
+S(n): O(1)

@@ -1,0 +1,16 @@
+Code:
+void traverse(struct Node* head) {
+    int count=0;
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+        count++;
+    }
+    printf("NULL\n");
+printf("Number of nodes: %d\n", count);
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1)

@@ -1,0 +1,14 @@
+Code:
+int dequeue(int queue[], int F, int R) {
+     if (!isEmpty(F, R)) {
+        F++;  
+       int element = queue[F];
+     printf("Dequeued %d from queue\n", element);
+          return F;  
+     }
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

@@ -1,0 +1,20 @@
+Code:
+void traverse() {
+    int count=0;
+    if (!tail) {
+        printf("List is empty.\n");
+        return;
+    }
+    struct Node* temp = tail->next;
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+        count++;
+    } while (temp != tail->next);
+    printf("\n");
+printf("Number of nodes: %d\n ", count);
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 

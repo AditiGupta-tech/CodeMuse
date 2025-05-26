@@ -1,0 +1,15 @@
+Code:
+void checkCircular(struct Node* tail) {
+   struct Node* temp = tail->next; 
+    do {
+        if (temp->next == tail->next) { 
+            printf("The list is circular.\n");
+            return;
+        }
+        temp = temp->next;
+    } while (temp != tail->next);
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 

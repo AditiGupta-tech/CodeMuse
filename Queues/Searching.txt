@@ -1,0 +1,14 @@
+Code:
+int search(int queue[], int F, int R, int element)  {
+      for (int i = 0; i <= R; i++)   {
+              if (queue[i] == element) {
+                return i; 
+            }
+       }
+     return -1;
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

@@ -1,0 +1,36 @@
+a. Code: Insertion
+void insertRear(int value) {  
+    if ((rear + 1) % SIZE == front) {
+        printf("Queue Overflow\n");
+        return;
+    }
+    if (front == -1) {
+        front = rear = 0;
+    } else {
+        rear = (rear + 1) % SIZE;
+    }
+    deque[rear] = value;
+    printf("Enqueued %d\n", value);
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 
+
+b. Code: Deletion
+void deleteFront() { 
+    if (front == -1) {
+        printf("Queue Underflow\n");
+        return;
+    }
+  printf("Dequeued %d\n", deque[front]);
+    if (front == rear) {
+        front = rear = -1;
+    } else {
+        front = (front + 1) % SIZE;
+    }
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 

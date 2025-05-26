@@ -1,0 +1,24 @@
+Code:
+void enqueue(int value) {
+    if (isFull()) {
+        printf("Priority Queue is Full\n");
+        return;
+    }
+    if (isEmpty()) {
+        front = rear = 0;
+        pq[rear] = value;
+    } else {
+        int i;
+   for (i = rear; i >= front && pq[i] > value; i--) {
+            pq[i + 1] = pq[i];  
+        }
+        pq[i + 1] = value;
+        rear++;
+    }
+    printf("Inserted %d\n", value);
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

@@ -1,0 +1,104 @@
+a. Code: Creation
+#define SIZE 30
+#define STACKS 3
+#define SEGMENT_SIZE (SIZE / STACKS)
+int arr[SIZE];
+int top[STACKS] = {-1, -1, -1};
+int baseIndex(int stackNum) {
+return stackNum*SEGMENT_SIZE;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(n) depends on size of segmented stacks
+
+b. Code: isFull
+int isFull(int stackNum) {
+return top[stackNum]  == SEGMENT_SIZE - 1;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 
+
+c. Code: Insertion
+void push(int stackNum, int value) {
+    if (stackNum == 0) {
+        if (top[0] < baseIndex(1) - 1) { 
+            top[0]++;
+            arr[top[0]] = value;
+            printf("Pushed %d to Stack 1\n", value);
+        } 
+    } else if (stackNum == 1 || stackNum == 2) { 
+        if (!isFull(stackNum)) {
+            top[stackNum]++;
+            arr[baseIndex(stackNum) + top[stackNum]] = value;
+            printf("Pushed %d to Stack %d\n", value, stackNum + 1);
+        } else {
+            printf("Stack %d Overflow!\n", stackNum + 1);
+        }
+    }
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1)
+
+d. Code: Searching
+int search(int stackNum, int value) {
+    if (stackNum == 0) {
+        for (int i = 0; i <= top[0]; i++) {
+            if (arr[i] == value) {
+                return i;
+            }
+        }
+    } else {
+        int base = baseIndex(stackNum);
+        for (int i = 0; i <= top[stackNum]; i++) {
+            if (arr[base + i] == value) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1)
+
+e. Code: isEmpty
+int isEmpty(int stackNum) {
+       return top[stackNum] == -1;
+      }
+
+T(n): O(1) for all cases
+
+S(n): O(1)
+
+f. Code: Deletion
+int pop(int stackNum) {
+    int value;
+    if (stackNum == 0) { 
+        if (!isEmpty(stackNum)) {
+            value = arr[top[0]];
+            top[0]--;
+            return value;
+        }
+    } else {
+        if (!isEmpty(stackNum)) {
+   value = arr[baseIndex(stackNum) + top[stackNum]];
+            top[stackNum]--;
+            return value;
+        }
+    }
+    printf("Stack %d Underflow!\n", stackNum + 1);
+    return -1;
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1)

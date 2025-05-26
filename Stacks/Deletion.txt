@@ -1,0 +1,15 @@
+Code:
+int pop(int element) { 
+if (!isEmpty(top)) { 
+element = stack[top]; 
+top--; 
+printf(“Popped %d from stack”,element);
+
+return top; 
+   } 
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1)

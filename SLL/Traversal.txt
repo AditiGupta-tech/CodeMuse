@@ -1,0 +1,24 @@
+a. Code: 
+void LLT(struct node *ptr) {
+    int count = 0;
+    struct node *temp = ptr; 
+    if (!temp) {
+        printf("List is empty.\n");
+        return;
+    }
+    while (temp) {
+        printf("%c -> ", temp->data);
+        count++;
+        temp = temp->link;
+    }
+ printf("NULL \nNumber of nodes: %d\n", count);
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 
+
+
+
+
+

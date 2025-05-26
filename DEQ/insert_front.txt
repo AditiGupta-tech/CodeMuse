@@ -1,0 +1,20 @@
+Code:
+void insertFront(int value) {
+    if (isFull()) {
+        printf("Deque is Full\n");
+        return;
+    }
+    if (isEmpty()) {
+        front = rear = 0;
+    } else if (front == 0) {
+        front = SIZE - 1;
+    } else {
+        front--;
+    }
+    deque[front] = value;
+    printf("Inserted %d at front\n", value);
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 

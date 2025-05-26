@@ -1,0 +1,18 @@
+Code:
+void dequeue() {
+    if (isEmpty()) {
+  printf("Priority Queue is Empty\n");
+      return;
+   } 
+     printf("Deleted %d\n", pq[front]);
+     if (front == rear) {  
+              front = rear = -1;
+       } else {
+            front++;
+        }
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

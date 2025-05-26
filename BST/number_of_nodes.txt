@@ -1,0 +1,12 @@
+Code:
+int countNodes(struct Node* root) {
+    if (root == NULL)
+        return 0;
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
+T(n): O(1) in best case
+T(n): O(log2n) in average case 
+T(n): O(n) in worst case
+
+S(n): O(h) where h=height (because of recursive calls)

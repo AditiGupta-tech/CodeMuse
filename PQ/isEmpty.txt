@@ -1,0 +1,8 @@
+Code:
+int isEmpty() {
+      return front == -1;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 

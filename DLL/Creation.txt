@@ -1,0 +1,10 @@
+Code:
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+T(n): O(1) for all cases
+
+S(n): O(n) depends on number of nodes

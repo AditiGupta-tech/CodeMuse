@@ -1,0 +1,57 @@
+a. Code: Deletion from beginning
+struct node* deleteAtBeginning(struct node *head) {
+     if (!head) return NULL;
+     struct node *temp = head;
+     head = head->link;
+     free(temp);
+     return head;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 
+
+b. Code: Deletion from end
+struct node* deleteAtEnd(struct node *head) {
+    if (!head) return NULL;
+    if (!head->link) {
+        free(head);
+        return NULL;
+    }
+struct node *temp = head, *prev = NULL;
+    while (temp->link) {
+        prev = temp;
+        temp = temp->link;
+    }
+    prev->link = NULL;
+    free(temp);
+    return head;
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 
+
+c. Code: Deletion at arbitrary position
+struct node* deleteAtPosition(struct node *head, int position) {
+    if (!head) return NULL;
+    if (position <= 1) {
+    return deleteAtBeginning(head);
+    }
+    struct node *temp = head, *prev = NULL;
+    for (int i = 1; temp && i < position; i++) {
+        prev = temp;
+        temp = temp->link;
+    }
+    if (!temp) return head;
+    prev->link = temp->link;
+    free(temp);
+    return head;
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 
+
+

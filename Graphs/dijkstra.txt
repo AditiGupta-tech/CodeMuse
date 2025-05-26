@@ -1,0 +1,38 @@
+Code:
+#define INF 9999
+#define V 5
+
+void dijkstra(int graph[V][V], int start) {
+    int dist[V], visited[V] = {0};
+
+    for (int i = 0; i < V; i++)
+        dist[i] = INF;
+
+    dist[start] = 0;
+
+    for (int count = 0; count < V - 1; count++) {
+        int min = INF, u;
+
+        for (int i = 0; i < V; i++)
+            if (!visited[i] && dist[i] <= min)
+                min = dist[i], u = i;
+
+        visited[u] = 1;
+
+        for (int v = 0; v < V; v++)
+            if (!visited[v] && graph[u][v] && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+    }
+
+    printf("Shortest distances from node %d:\n", start);
+    for (int i = 0; i < V; i++)
+        printf("To %d: %d\n", i, dist[i]);
+}
+
+T(n): O(n²) for all cases (Adj Matrix + No Heap)
+S(n): O(n)
+
+OR
+
+T(n): O((n+e)log2n) for all cases (Adj List + Min Heap)
+S(n): O(n+e)

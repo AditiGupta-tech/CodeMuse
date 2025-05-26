@@ -1,0 +1,52 @@
+Code:
+#define V 5  
+#define E 7 
+
+struct Edge {
+    int src, dest, weight;
+};
+
+int parent[V];
+
+int find(int i) {
+    if (parent[i] == i) return i;
+    return parent[i] = find(parent[i]); 
+}
+
+void unionSet(int x, int y) {
+    int xroot = find(x);
+    int yroot = find(y);
+    parent[yroot] = xroot;
+}
+
+int cmp(const struct Edge* a, const struct Edge* b) {
+    return (a->weight) - (b->weight);
+}
+
+void kruskal(struct Edge edges[]) {
+    for (int i = 0; i < V; i++) parent[i] = i;
+
+    qsort(edges, E, sizeof(edges[0]), cmp);
+
+    printf("Edges in MST:\n");
+    int totalWeight = 0;
+    int count = 0;
+
+    for (int i = 0; i < E && count < V - 1; i++) {
+        int u = edges[i].src;
+        int v = edges[i].dest;
+
+        if (find(u) != find(v)) {
+            printf("%d - %d (weight %d)\n", u, v, edges[i].weight);
+            unionSet(u, v);
+            totalWeight += edges[i].weight;
+            count++;
+        }
+    }
+
+    printf("Total weight: %d\n", totalWeight);
+}
+
+T(n) : O(E log E) for all cases, where E: edges
+
+S(n) : O(V) where V: vertices

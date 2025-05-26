@@ -1,0 +1,20 @@
+Code:
+void enqueue(int value) {
+    if (isFull()) {
+    printf("Circular Queue is Full\n");
+     return;
+    }
+     if (isEmpty()) {
+        front = rear = 0;
+    }
+    else {
+        rear++;
+    }
+    cq[rear] = value;
+    printf("Inserted %d\n", value);
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1)

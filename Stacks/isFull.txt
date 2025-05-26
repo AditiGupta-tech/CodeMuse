@@ -1,0 +1,11 @@
+Code:
+int isFull (int top, int n) { 
+if (top==n-1) {
+return 1; 
+  } 
+return -1; 
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1)

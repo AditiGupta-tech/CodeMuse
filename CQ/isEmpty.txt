@@ -1,0 +1,9 @@
+Code:
+int isEmpty() {
+            if (front == rear) {
+         } return 1;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1)

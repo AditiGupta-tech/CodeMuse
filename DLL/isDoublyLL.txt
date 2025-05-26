@@ -1,0 +1,10 @@
+Code:
+void isDoublyLinked(struct Node* head) {
+    if (head->next->prev == head) {
+        printf("The list is doubly linked.\n");
+    }
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1)

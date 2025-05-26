@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CodeMuse by Aditi</title>
+  <link rel="stylesheet" href="content.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+  <div class="logo">CodeMuse</div>
+  <div class="nav-links">
+    <a href="#">View Saved</a>
+</nav>
+
+  <h1 id="title">Loading...</h1>
+  <pre id="content">Please wait while loading content...</pre>
+
+  <a href="#" id="copy">Copy Code</a>
+  <a href="#" id="save">Save Code</a>
+  <script>
+    document.getElementById('copy').addEventListener('click', async function(e) {
+      e.preventDefault();
+      const content = document.getElementById('content').textContent;
+      try {
+        await navigator.clipboard.writeText(content);
+        const copyBtn = document.getElementById('copy');
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy Code';
+        }, 1500);
+      } catch (err) {
+        alert('Failed to copy!');
+      }
+    });
+  </script>
+  <a href="index.html" id="back">← Back to categories</a>
+
+
+  <script>
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    async function loadContent() {
+      const file = getQueryParam('file');
+      if (!file) {
+        document.getElementById('content').textContent = 'No file specified.';
+        return;
+      }
+
+      // Set title based on filename 
+      const title = file.replace(/[-_]/g, ' ').replace('.txt', '');
+      document.getElementById('title').textContent = title.charAt(0).toUpperCase() + title.slice(1);
+
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error('Failed to fetch content.');
+
+        const text = await res.text();
+
+        // Save/Remove code 
+        const saveBtn = document.getElementById('save');
+        let isSaved = false;
+        let savedKey = 'saved_' + file;
+
+        // Check if already saved
+        if (localStorage.getItem(savedKey)) {
+          isSaved = true;
+          saveBtn.textContent = 'Saved!';
+        }
+
+        saveBtn.onclick = function(e) {
+          e.preventDefault();
+          if (!isSaved) {
+            localStorage.setItem(savedKey, text);
+            saveBtn.textContent = 'Saved!';
+            isSaved = true;
+          } else {
+            localStorage.removeItem(savedKey);
+            alert(file + ' removed from saved!');
+            saveBtn.textContent = 'Save Code';
+            isSaved = false;
+          }
+        };
+
+        // View Saved logic (show filenames and their content on the page)
+        document.querySelector('.nav-links a').addEventListener('click', function(e) {
+          e.preventDefault();
+      
+          let savedFiles = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('saved_')) {
+              const filename = key.replace('saved_', '');
+              const content = localStorage.getItem(key);
+              savedFiles.push({ filename, content });
+            }
+          }
+
+          const container = document.createElement('div');
+          container.id = 'saved-files';
+          container.style.margin = '2em 0';
+
+          if (savedFiles.length === 0) {
+            container.textContent = 'No saved files.';
+          } else {
+            savedFiles.forEach(file => {
+              const fileDiv = document.createElement('div');
+              fileDiv.style.marginBottom = '1.5em';
+
+              const title = document.createElement('h3');
+              title.textContent = file.filename;
+              fileDiv.appendChild(title);
+
+              const pre = document.createElement('pre');
+              pre.textContent = file.content;
+              fileDiv.appendChild(pre);
+
+              container.appendChild(fileDiv);
+            });
+          }
+
+          // Insert after the navbar
+          document.body.insertBefore(container, document.getElementById('title'));
+        });
+        document.getElementById('content').textContent = text;
+      } catch (err) {
+        document.getElementById('content').textContent = 'Error loading content: ' + err.message;
+      }
+    }
+
+    loadContent();
+  </script>
+</body>
+</html>

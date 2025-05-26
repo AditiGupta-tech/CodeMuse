@@ -1,0 +1,22 @@
+Code:
+void search(int value) {
+    if (isEmpty()) {
+        printf("Deque is Empty\n");
+        return;
+    }
+    int i = front;
+    while (1) {
+        if (deque[i] == value) {
+ printf("Element %d found\n", value);
+            return;
+        }
+        if (i == rear) break;
+        i = (i + 1) % n;
+    }
+printf("Element %d not found\n", value);
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

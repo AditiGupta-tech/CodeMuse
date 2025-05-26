@@ -1,0 +1,34 @@
+a. Code: Enqueue
+void enqueue(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (!rear) {
+        front = rear = newNode;
+        return;
+    }
+
+    rear->next = newNode;
+    rear = newNode;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1)
+
+b. Code: Dequeue
+void dequeue() {
+    if (!front) return;
+
+    struct Node* temp = front;
+    front = front->next;
+
+    if (!front) rear = NULL;
+    free(temp);
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1)

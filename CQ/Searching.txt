@@ -1,0 +1,18 @@
+Code:
+void search(int value) {
+    int i = front, pos = 1;
+    do {
+        if (cq[i] == value) {
+    printf("Element %d found at position %d\n", value, pos);
+            return;
+        }
+        i = (i + 1) % SIZE;
+        pos++;
+    } while (i != front);
+printf("Element %d not found in the Circular Queue\n", value);
+}    
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 

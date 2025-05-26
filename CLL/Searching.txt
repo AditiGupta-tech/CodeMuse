@@ -1,0 +1,16 @@
+Code:
+int search(int key) {
+    if (!tail) return 0;
+    struct Node* temp = tail->next;
+    	
+ do {
+        if (temp->data == key) return 1;
+        temp = temp->next;
+    } while (temp != tail->next);
+    
+    return 0;
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 

@@ -1,0 +1,63 @@
+a.Code: Two sorted arrays
+void mergeSort(int A1[], int n1, int A2[], int n2, int A12[]) {
+    int P1 = 0, P2 = 0, P3 = 0;
+    
+    while (P1 < n1 && P2 < n2) {
+        if (A1[P1] <= A2[P2]) {
+            A12[P3++] = A1[P1++];
+        } else {
+            A12[P3++] = A2[P2++];
+        }
+    }
+    while (P1 < n1) {
+        A12[P3++] = A1[P1++];
+    }
+    while (P2 < n2) {
+        A12[P3++] = A2[P2++];
+    }
+}
+
+T(n): O(n1) or O(n2)best case
+T(n): O(n1+n2) average and worst cases
+
+S(n): O(n1+n2)
+
+b.Code: One unsorted array
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    int L[n1], R[n2]; 
+   
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    int i = 0, j = 0, k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j])
+            arr[k++] = L[i++];
+        else
+            arr[k++] = R[j++];
+    }
+    while (i < n1)
+        arr[k++] = L[i++];
+    while (j < n2)
+        arr[k++] = R[j++];
+}
+
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+T(n): O(n(log2n)) for all cases
+
+S(n): O(!)

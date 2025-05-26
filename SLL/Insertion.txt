@@ -1,0 +1,63 @@
+a. Code: Insertion from beginning
+struct node* insertAtBeginning(struct node *head, char value) {
+struct node *newNode = (struct node *)malloc(sizeof(struct node));
+      newNode->data = value;
+      newNode->link = head;
+      return newNode;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 
+
+b. Code: Insertion from end
+struct node* insertAtEnd(struct node *head, char value) {
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+
+    newNode->data = value;
+    newNode->link = NULL;
+
+    if (!head) return newNode;
+
+    struct node *temp = head;
+    while (temp->link) {
+        temp = temp->link;
+    }
+    temp->link = newNode;
+    return head;
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 
+
+c. Code: Insertion at arbitrary position
+struct node* insertAtPosition(struct node *head, char value, int position) {
+    if (position <= 1) {
+    return insertAtBeginning(head, value);
+    }
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+    newNode->data = value;
+
+    struct node *temp = head;
+ for (int i = 1; temp && i < position - 1; i++) {
+        temp = temp->link;
+    }
+    
+    if (!temp) {
+        printf("Invalid position!\n");
+        free(newNode);
+        return head;
+    }
+
+    newNode->link = temp->link;
+    temp->link = newNode;
+    return head;
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1) 
+
+

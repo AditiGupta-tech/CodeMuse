@@ -1,0 +1,18 @@
+a. Code: 
+int searchLL(struct node* head, int target) {
+struct node* temp = head;
+    while(temp) {
+     if (temp->data==target) return 1;
+     temp=temp->link;
+           } 
+      return 0;
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1) 
+
+
+
+
+

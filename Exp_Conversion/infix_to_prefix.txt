@@ -1,0 +1,44 @@
+Code:
+void infixToPrefix(char infix[]) {
+    char prefix[20];
+    int i = 0, j = 0;
+
+    reverseString(infix); 
+
+    for (i = 0; infix[i] != '\0'; i++) {
+        if (infix[i] == '(')  { 
+           infix[i] = ')';
+        } else if (infix[i] == ')')  {
+        infix[i] = '(';
+    }
+    for (i = 0; infix[i] != '\0'; i++) {
+        char token = infix[i];
+
+        if (isalnum(token)) {
+            prefix[j++] = token;
+        } else if (token == '(') {
+            push(token);
+        } else if (isOperator(token)) {
+            while (top != -1 && 
+            precedence(stack[top]) >= precedence(token)) {
+                prefix[j++] = pop();
+            }
+            push(token);
+        } else if (token == ')') {
+            while (top != -1 && stack[top] != '(')) {
+                prefix[j++] = pop();
+            }
+            pop();
+        }
+    }
+    while (top != -1) {
+        prefix[j++] = pop();
+    }
+    prefix[j] = '\0';
+    reverseString(prefix); 
+printf("Prefix Expression: %s\n", prefix);
+}
+
+T(n): O(n) for all cases
+
+S(n): O(n) depends on number of operators and operands

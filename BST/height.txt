@@ -1,0 +1,14 @@
+Code:
+int height(struct Node* root) {
+    if (root == NULL)
+        return 0;
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
+
+T(n): O(1) in best case
+T(n): O(log2n) in average case 
+T(n): O(n) in worst case
+
+S(n): O(h) where h=height (because of recursive calls)

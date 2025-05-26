@@ -1,0 +1,32 @@
+Code:
+void infixToPostfix(char infix[]) {
+    char postfix[20];
+    int i = 0, j = 0;
+    push('(');
+    strcat(infix, ")");
+    while (infix[i] != '\0') {
+        char token = infix[i];
+        if (token == '(') {
+            push(token);
+        } else if (isalnum(token)) {
+            postfix[j++] = token;
+        } else if (isOperator(token)) {
+            while (isOperator(stack[top]) && precedence(stack[top]) >= precedence(token)) {
+                postfix[j++] = pop();
+            }
+            push(token);
+        } else if (token == ')') {
+            while (stack[top] != '(') {
+                postfix[j++] = pop();
+            }
+            pop();
+        }
+        i++;
+    }
+        postfix[j] = '\0';
+        printf("Postfix Expression: %s\n", postfix);
+}
+
+T(n): O(n) for all cases
+
+S(n): O(n) depends on number of operators and operands

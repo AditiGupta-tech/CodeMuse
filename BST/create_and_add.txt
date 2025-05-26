@@ -1,0 +1,35 @@
+a. Code: Creation
+struct Node {
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(n) depends on the number of nodes in the BST.
+
+b. Code: Addition
+struct Node* insert(struct Node* root, int value) {
+    if (root == NULL)  
+return createNode(value);
+    if (value < root->data) 
+root->left = insert(root->left, value);
+    else if (value > root->data) 
+root->right = insert(root->right, value);
+    return root;
+}
+
+T(n): O(1) in best case
+T(n): O(log2n) in average case 
+T(n): O(n) in worst case
+
+S(n): O(1) 

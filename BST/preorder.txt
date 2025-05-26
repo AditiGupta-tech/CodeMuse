@@ -1,0 +1,11 @@
+Code:
+void preorderTraversal(struct tree* root) {
+    if (root == NULL) return;
+    printf("%d ", root->data);
+    preorderTraversal(root->left);
+    preorderTraversal(root->right);
+}
+ 
+T(n): O(n) for all cases
+
+S(n): O(h) where h=height (because of recursive calls)

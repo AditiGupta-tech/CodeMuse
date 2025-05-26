@@ -1,0 +1,17 @@
+Code:
+int visited[100] = {0};
+
+void dfs(int graph[5][5], int node, int n) {
+    visited[node] = 1;
+    printf("%d ", node);
+
+    for (int i = 0; i < n; i++) {
+        if (graph[node][i] && !visited[i]) {
+            dfs(graph, i, n);
+        }
+    }
+}
+
+T(n): O(n + e) for all cases	
+
+S(n): O(n) 

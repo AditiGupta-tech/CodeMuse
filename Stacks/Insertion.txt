@@ -1,0 +1,15 @@
+Code:
+int push(int stack[], int n, int top, int element) {
+
+if(!isFull(top, n)) { 
+top++; 
+stack[top] = element; 
+printf(“Pushed %d”, element) 
+} 
+return top; 
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1)

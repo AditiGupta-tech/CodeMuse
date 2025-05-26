@@ -1,0 +1,18 @@
+Code:
+void insert(int value) {
+struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+
+    newNode->data = value; 
+    if (!tail) {
+        tail = newNode;
+        tail->next = newNode;
+        return;
+    }
+    newNode->next = tail->next;
+    tail->next = newNode;
+    tail = newNode;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1) 

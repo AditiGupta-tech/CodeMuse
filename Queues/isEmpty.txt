@@ -1,0 +1,11 @@
+Code:
+int isEmpty(int F, int R) {
+        if (F == R) {
+             return 1; 
+          }
+     }
+       return -1;
+
+T(n): O(1) for all cases
+
+S(n): O(1) 

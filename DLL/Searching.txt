@@ -1,0 +1,12 @@
+Code:
+int search(struct Node* head, int key) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        if (temp->data == key) return 1; 
+        temp = temp->next;
+     }
+}
+
+T(n): O(n) for all cases
+
+S(n): O(1)

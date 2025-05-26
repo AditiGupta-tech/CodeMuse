@@ -1,0 +1,16 @@
+Code:
+int searchElement (int stack[], int top,
+int element) {
+
+for (int i=0; i<=top; i++) { 
+if (stack[i]==element) { 
+return i; 
+  } 
+} 
+return -1; 
+}
+
+T(n): O(1) best case
+T(n): O(n) average and worst cases
+
+S(n): O(1)

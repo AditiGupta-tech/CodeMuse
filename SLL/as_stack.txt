@@ -1,0 +1,25 @@
+a. Code: Push
+void push(int value) {
+    
+struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    
+  newNode->data = value;
+    newNode->next = top;
+    top = newNode;
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1)
+
+b. Code: Pop
+void pop() {
+    if (!top) return;
+    struct Node* temp = top;
+    top = top->next;
+    free(temp);
+}
+
+T(n): O(1) for all cases
+
+S(n): O(1)
