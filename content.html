@@ -5,42 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CodeMuse by Aditi</title>
   <link rel="stylesheet" href="content.css">
-  <style>
-    
-  </style>
 </head>
 <body>
   <nav class="navbar">
-  <div class="logo">CodeMuse</div>
-  <div class="nav-links">
-    <a href="#">View Saved</a>
-</nav>
+    <a href="index.html" id="back">← Back to categories</a>
+    <div class="resources">
+      <a href="https://igdtuwresource.github.io/f/#" target="_blank">Find Resources</a>
+      <a href="https://drive.google.com/drive/folders/1C6WlH3AvaDzA55UNaGXmvm7euGQznUlW?usp=drive_link" target="_blank">Add Resources</a>
+    </div>
+    <div class="nav-links">
+      <a href="#" id="viewSaved">View Saved</a>
+    </div>
+  </nav>
 
   <h1 id="title">Loading...</h1>
-  <pre id="content">Please wait while loading content...</pre>
+  <p class="description">Find the codes along with their complexities. Save the codes and scroll below to view them. Copy a code and run it on the CodeMuse's C compiler!</p>
 
-  <a href="#" id="copy">Copy Code</a>
-  <a href="#" id="save">Save Code</a>
+  <div class="content-wrapper">
+    <pre id="content">Please wait while loading content...</pre>
+    <div class="copy-save">
+      <a href="#" id="copy" title="Copy the code">Copy Code</a>
+      <a href="#" id="save" title="Save code to view later">Save Code</a>
+      <a href="compiler.html" id="test" title="Test the code on the C compiler">Test Code on Compiler →</a>
+      <button id="explain">💡 Explain with AI</button>
+    </div>
+    <div id="explanationBox" style="margin-top: 2em; padding: 1em; border: 1px solid #ccc; display: none;"></div>
+  </div>
+    </div>
+  </div>
+
   <script>
     document.getElementById('copy').addEventListener('click', async function(e) {
       e.preventDefault();
       const content = document.getElementById('content').textContent;
       try {
         await navigator.clipboard.writeText(content);
-        const copyBtn = document.getElementById('copy');
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => {
-          copyBtn.textContent = 'Copy Code';
-        }, 1500);
-      } catch (err) {
+        this.textContent = 'Copied!';
+        setTimeout(() => this.textContent = 'Copy Code', 1500);
+      } catch {
         alert('Failed to copy!');
       }
     });
-  </script>
-  <a href="index.html" id="back">← Back to categories</a>
-
-
-  <script>
 
     function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
@@ -49,31 +54,21 @@
 
     async function loadContent() {
       const file = getQueryParam('file');
-      if (!file) {
-        document.getElementById('content').textContent = 'No file specified.';
-        return;
-      }
+      if (!file) return document.getElementById('content').textContent = 'No file specified.';
 
-      // Set title based on filename 
       const title = file.replace(/[-_]/g, ' ').replace('.txt', '');
       document.getElementById('title').textContent = title.charAt(0).toUpperCase() + title.slice(1);
 
       try {
         const res = await fetch(file);
         if (!res.ok) throw new Error('Failed to fetch content.');
-
         const text = await res.text();
+        document.getElementById('content').textContent = text;
 
-        // Save/Remove code 
         const saveBtn = document.getElementById('save');
-        let isSaved = false;
-        let savedKey = 'saved_' + file;
-
-        // Check if already saved
-        if (localStorage.getItem(savedKey)) {
-          isSaved = true;
-          saveBtn.textContent = 'Saved!';
-        }
+        const savedKey = 'saved_' + file;
+        let isSaved = !!localStorage.getItem(savedKey);
+        if (isSaved) saveBtn.textContent = 'Saved!';
 
         saveBtn.onclick = function(e) {
           e.preventDefault();
@@ -83,59 +78,82 @@
             isSaved = true;
           } else {
             localStorage.removeItem(savedKey);
-            alert(file + ' removed from saved!');
             saveBtn.textContent = 'Save Code';
             isSaved = false;
           }
         };
-
-        // View Saved logic (show filenames and their content on the page)
-        document.querySelector('.nav-links a').addEventListener('click', function(e) {
-          e.preventDefault();
-      
-          let savedFiles = [];
-          for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith('saved_')) {
-              const filename = key.replace('saved_', '');
-              const content = localStorage.getItem(key);
-              savedFiles.push({ filename, content });
-            }
-          }
-
-          const container = document.createElement('div');
-          container.id = 'saved-files';
-          container.style.margin = '2em 0';
-
-          if (savedFiles.length === 0) {
-            container.textContent = 'No saved files.';
-          } else {
-            savedFiles.forEach(file => {
-              const fileDiv = document.createElement('div');
-              fileDiv.style.marginBottom = '1.5em';
-
-              const title = document.createElement('h3');
-              title.textContent = file.filename;
-              fileDiv.appendChild(title);
-
-              const pre = document.createElement('pre');
-              pre.textContent = file.content;
-              fileDiv.appendChild(pre);
-
-              container.appendChild(fileDiv);
-            });
-          }
-
-          // Insert after the navbar
-          document.body.insertBefore(container, document.getElementById('title'));
-        });
-        document.getElementById('content').textContent = text;
       } catch (err) {
         document.getElementById('content').textContent = 'Error loading content: ' + err.message;
       }
     }
 
+    document.getElementById('viewSaved').addEventListener('click', function(e) {
+      e.preventDefault();
+      const savedFiles = Object.keys(localStorage)
+        .filter(key => key.startsWith('saved_'))
+        .map(key => ({ filename: key.replace('saved_', ''), content: localStorage.getItem(key) }));
+
+      const existingContainer = document.getElementById('saved-files');
+      if (existingContainer) existingContainer.remove();
+
+      const container = document.createElement('div');
+      container.id = 'saved-files';
+      container.style.margin = '2em auto';
+      container.style.maxWidth = '90vw';
+
+      if (savedFiles.length === 0) {
+        container.textContent = 'No saved files.';
+      } else {
+        savedFiles.forEach(file => {
+          const fileDiv = document.createElement('div');
+          fileDiv.style.marginBottom = '2em';
+
+          const title = document.createElement('h3');
+          title.textContent = file.filename;
+          fileDiv.appendChild(title);
+
+          const pre = document.createElement('pre');
+          pre.textContent = file.content;
+          fileDiv.appendChild(pre);
+
+          container.appendChild(fileDiv);
+        });
+      }
+
+      document.body.appendChild(container);
+    });
+
     loadContent();
+
+    document.getElementById('explain').addEventListener('click', async () => {
+  const code = document.getElementById('content').textContent.trim();
+  const explanationBox = document.getElementById('explanationBox');
+
+  if (!code) {
+    explanationBox.style.display = 'block';
+    explanationBox.textContent = "⚠️ No code to explain!";
+    return;
+  }
+
+  explanationBox.style.display = 'block';
+  explanationBox.textContent = '🤖 AI is thinking... please wait.';
+
+  try {
+    const response = await fetch('http://localhost:3000/explain', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+
+    if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+    const data = await response.json();
+    explanationBox.textContent = data.explanation || 'No explanation received.';
+  } catch (err) {
+    explanationBox.textContent = `❌ Error fetching explanation: ${err.message}`;
+  }
+});
+
   </script>
 </body>
 </html>

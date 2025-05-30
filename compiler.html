@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CodeMuse Compiler</title>
+  <link rel="stylesheet" href="compiler.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="content.html" id="back">← Back to code</a>
+</nav>
+
+  <h2>🚀 CodeMuse C Compiler</h2>
+  <p class="description">
+    Test your C code here! Write your code, provide input, and run it to see the output.
+  </p>
+   <p class="description"> <small>
+    Do not include printf statements in the function you create. The input will be read from the input area and output will be displayed below after running the code.
+  </small></p>
+  
+  <div class="card">
+     <div class="top-bar">
+    <button id="runBtn">
+     🞂 Run Code
+      <span id="btnLoader" class="btn-loader" style="display: none;"></span>
+    </button>
+  </div>
+    <label for="code">C Code:</label>
+    <textarea id="code">
+#include <stdio.h>
+#include <stdlib.h>
+
+//create function
+dtype funcName(parameters) {
+  // Your code here
+}
+
+int main() {
+  // Your code here
+  printf("Hello, World!\\n");
+  return 0;
+}
+    </textarea>
+  </div>
+
+ <div class="card input-section">
+  <label for="input">Input (stdin):</label>
+  <textarea id="input" row="3" placeholder="Enter input here..."></textarea>
+</div>
+
+  <div class="card">
+    <label>Output:</label>
+    <pre id="output">No output yet.</pre>
+  </div>
+
+  <script>
+const runBtn = document.getElementById('runBtn');
+const codeArea = document.getElementById('code');
+const inputArea = document.getElementById('input');
+const outputArea = document.getElementById('output');
+const btnLoader = document.getElementById('btnLoader');
+
+const API_KEY = "fa0c683dfamsh8e3afb63351f0bep1ceb11jsnfaf6be81262d"; // <-- Add your actual RapidAPI key here
+const API_HOST = "judge0-ce.p.rapidapi.com";
+const SUBMIT_URL = `https://${API_HOST}/submissions?base64_encoded=false&wait=false`;
+
+runBtn.onclick = async function () {
+  outputArea.textContent = "";
+  btnLoader.style.display = "inline-block";
+  runBtn.disabled = true;
+
+  const code = codeArea.value;
+  const input = inputArea.value;
+
+  try {
+    // Step 1: Submit code
+    const submitResponse = await fetch(SUBMIT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Host": API_HOST
+      },
+      body: JSON.stringify({
+        source_code: code,
+        language_id: 50, // C (gcc)
+        stdin: input || ""
+      })
+    });
+
+    const submitResult = await submitResponse.json();
+    const token = submitResult.token;
+
+    if (!token) throw new Error("Failed to get submission token.");
+
+    // Step 2: Poll result using the token
+    let result;
+    while (true) {
+      const resultResponse = await fetch(`https://${API_HOST}/submissions/${token}?base64_encoded=false&fields=*`, {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": API_KEY,
+          "X-RapidAPI-Host": API_HOST
+        }
+      });
+
+      result = await resultResponse.json();
+
+      if (result.status.id <= 2) {
+        // Status 1 = In Queue, 2 = Processing
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } else {
+        break;
+      }
+    }
+
+    // Step 3: Display the result
+    if (result.stderr) {
+      outputArea.textContent = "⚠️ Runtime Error:\n" + result.stderr;
+    } else if (result.compile_output) {
+      outputArea.textContent = "🔧 Compile Output:\n" + result.compile_output;
+    } else {
+      outputArea.textContent = (result.stdout || "No output.");
+    }
+
+  } catch (err) {
+    outputArea.textContent = "❌ Error: Output can't be generated. Try again!\n" + err.message;
+  } finally {
+    btnLoader.style.display = "none";
+    runBtn.disabled = false;
+  }
+};
+
+
+  </script>
+</body>
+</html>
