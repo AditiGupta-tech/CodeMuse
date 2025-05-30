@@ -27,7 +27,7 @@
       <a href="#" id="copy" title="Copy the code">Copy Code</a>
       <a href="#" id="save" title="Save code to view later">Save Code</a>
       <a href="compiler.html" id="test" title="Test the code on the C compiler">Test Code on Compiler →</a>
-      <button id="explain">💡 Explain with AI</button>
+<!--       <button id="explain">💡 Explain with AI</button> -->
     </div>
     <div id="explanationBox" style="margin-top: 2em; padding: 1em; border: 1px solid #ccc; display: none;"></div>
   </div>
@@ -125,34 +125,34 @@
 
     loadContent();
 
-    document.getElementById('explain').addEventListener('click', async () => {
-  const code = document.getElementById('content').textContent.trim();
-  const explanationBox = document.getElementById('explanationBox');
+//     document.getElementById('explain').addEventListener('click', async () => {
+//   const code = document.getElementById('content').textContent.trim();
+//   const explanationBox = document.getElementById('explanationBox');
 
-  if (!code) {
-    explanationBox.style.display = 'block';
-    explanationBox.textContent = "⚠️ No code to explain!";
-    return;
-  }
+//   if (!code) {
+//     explanationBox.style.display = 'block';
+//     explanationBox.textContent = "⚠️ No code to explain!";
+//     return;
+//   }
 
-  explanationBox.style.display = 'block';
-  explanationBox.textContent = '🤖 AI is thinking... please wait.';
+//   explanationBox.style.display = 'block';
+//   explanationBox.textContent = '🤖 AI is thinking... please wait.';
 
-  try {
-    const response = await fetch('http://localhost:3000/explain', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code }),
-    });
+//   try {
+//     const response = await fetch('http://localhost:3000/explain', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ code }),
+//     });
 
-    if (!response.ok) throw new Error(`Server error: ${response.status}`);
+//     if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
-    const data = await response.json();
-    explanationBox.textContent = data.explanation || 'No explanation received.';
-  } catch (err) {
-    explanationBox.textContent = `❌ Error fetching explanation: ${err.message}`;
-  }
-});
+//     const data = await response.json();
+//     explanationBox.textContent = data.explanation || 'No explanation received.';
+//   } catch (err) {
+//     explanationBox.textContent = `❌ Error fetching explanation: ${err.message}`;
+//   }
+// });
 
   </script>
 </body>
